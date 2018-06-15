@@ -1,0 +1,11 @@
+In here are some useful variations on a central script that automates a lot of simple tasks in Gromacs, along with the supplementary files necessary to run the chosen examples.
+
+Examples (by folder name):
+
+(1) AAPMF
+	Uses Gromacs 4.6.7 to generate configurations (from pulling simulations) and .sge scripts for umbrella simulations and PMF calculations of stripped NDI cores in implicit solvent at atomistic levels of resolution.
+(2) CGPMF
+	Uses Gromacs 4.6.7 to generate configurations and .sge scripts for umbrella simulations and PMF calculations of DMFI-OPV3-IFMD.  Includes additional code to automatically check histogram coverage and setup further runs as well as continued runs.
+ 
+(3) CGassembly
+	Uses Gromacs 5.0 to equilibrate and simulate 50 molecules of the DMFI-OPV3-IFMD chemistry at a Martini level of resolution.  Currently the main script works for any DX1X2X3-OPV3-X3X2X1D chemistry when appropriately modified.
