@@ -1,0 +1,19 @@
+;define		    = -DPOSRES
+constraints         =  none
+integrator          =  steep
+nsteps              =  5000
+
+emtol               =  1000
+emstep              =  0.0005
+epsilon_r	    =  2.5
+
+ns_type             =  grid
+rlist               =  1.4
+rcoulomb            =  1.2
+coulombtype 	    =  cutoff
+vdw_type            =  cutoff
+cutoff-scheme	    =  verlet
+rvdw                =  1.2
+Tcoupl              =  no
+Pcoupl              =  no
+gen_vel             =  no

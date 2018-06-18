@@ -11,7 +11,8 @@ Some other useful resources to getting up to speed on these specific tasks and m
 Examples (by folder name):
 
 (1) AAPMF
-	Uses Gromacs 4.6.7 to generate configurations (from pulling simulations) and .sge scripts for umbrella simulations and PMF calculations of stripped NDI cores in implicit solvent at atomistic levels of resolution.
+	Uses Gromacs 4.6.7 to generate configurations (from pulling simulations) and .sge scripts for umbrella simulations and PMF calculations of atomistic DXXX-OPV3-XXXD monomers (in this example, DMFI) using a modified Charmm27 force field
+
 (2) CGPMF
 	Uses Gromacs 4.6.7 to generate configurations and .sge scripts for umbrella simulations and PMF calculations of DMFI-OPV3-IFMD.  Includes additional code to automatically check histogram coverage and setup further runs as well as continued runs.
  
