@@ -1,0 +1,13 @@
+This script will set up and run a simulation of any chemistry of the mirror-symmetric DXXX-OPV3-XXXD type.
+
+Usage is
+
+> bash assemble.sh [ 0/1 ] [ 0/1 ] [ 0/1 ] [ 0/1 ] [ 0/1 ] [ 0/1 ] [ DXXX ]
+
+where 0/1 means putting in either 0 or 1 and allows portions of the script to be run without running other portions (useful for trouble-shooting).  [ DXXX ] should be something like dabc, where a, b, and c are existing 1-letter codes referring to amino acids
+
+For example, to equilibrate and run the assembly of DMFI, 
+
+> bash assemble.sh 1 1 1 1 1 1 dmfi
+
+I urge you to make sure you understand what all the commands in the script are doing, especially those calling Gromacs commands.

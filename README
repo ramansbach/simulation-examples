@@ -1,5 +1,13 @@
 In here are some useful variations on a central script that automates a lot of simple tasks in Gromacs, along with the supplementary files necessary to run the chosen examples.
 
+Some other useful resources to getting up to speed on these specific tasks and molecular dynamics in general:
+
+* Frenkel, Daan, and Berend Smit. Understanding molecular simulation: from algorithms to applications. Vol. 1. Elsevier, 2001.
+
+* Gromacs User Manual (www.gromacs.org)
+
+* Gromacs Tutorials (http://www.bevanlab.biochem.vt.edu/Pages/Personal/justin/gmx-tutorials/index.html)
+
 Examples (by folder name):
 
 (1) AAPMF
