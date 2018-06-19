@@ -1,0 +1,15 @@
+import argparse
+
+parser = argparse.ArgumentParser(description='write input index file')
+parser.add_argument('nmols',metavar='M')
+parser.add_argument('groupi',metavar='G')
+indf = open("indinput.txt","w")
+args = parser.parse_args()
+nmols = int(args.nmols)
+groupi = int(args.groupi)
+indf.write("a1-{0}\n".format(nmols))
+indf.write("a{0}-{1}\n".format(nmols+1,2*nmols))
+indf.write("name {0} pep1\n".format(groupi))
+indf.write("name {0} pep2\n".format(groupi+1))
+indf.write("q\n")
+indf.close()

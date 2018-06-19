@@ -1,0 +1,7 @@
+a1-34
+a35-68
+name 1 Protein
+name 5 pep1
+name 6 pep2
+q
+

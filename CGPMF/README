@@ -1,0 +1,30 @@
+This example creates the files for, equilibrates, and runs a pulling simulation to generate configurations for umbrella sampling.
+
+It also creates a set of .sge files that may be submitted to a computing cluster (running a Sun Grid Engine scheduler, but should be relatively easy to modify for a different type of cluster).
+
+To do all this, ensure all template files are in the correct locations and run
+
+> bash setuppull.sh 1 1 1 1 1 1 1
+
+The various segments may be run one at a time by turning off certain segments by inputting 0 instead of 1; useful for debugging or for understanding what each piece is doing.
+
+After submitted and  running all .sge files, cd to 5_umbrella and run
+
+> python prepWham.py
+> bash run_gwham.sh [interval] [start time] [end time] [tpr names] [pullf names] [pullx names]
+
+to calculate PMF profiles for time blocks starting at [start time] in ps, ending at [end time] in ps, at intervals of [interval].  [tpr names], [pullf names] and [pullx names] are just files listing all of the simulation files and should be produced by prepWham.py as tpr-files.dat, pullf-files.dat, and pullx-files.dat.
+
+Once the profiles are calculated, you can investigate them in Matlab or something similar (see, e.g. notebook_examples/5_18_18_secondStructTesting.mlx)
+
+If they are not sufficiently well converged (e.g error bars over ~2-5 kT depending on the system in question) you can run histoCover from inside 5_umbrella as
+
+> python histoCover.py -f hist.xvg -t tpr-files.dat -s ../4_pull/summary_distances.txt -ff [sge run folder] -ex [number of steps longer to extend runs] -rp [prefix for calling gromacs in the sge files, might be something like /share/apps/gromacs467/bin]
+
+See inside the python script itself for more options.
+
+It will output a set of continuing sge files that should fully cover the system (but you can check by looking at newhistinit.xvg in something like Matlab and checking that anywhere that isn't covered by an umbrella window has a new simulation to go with it (see output).
+
+It will also output a submit.sh bash files that can be run to submit the full set of sge files.
+
+See also the umbrella sampling tutorial at http://www.bevanlab.biochem.vt.edu/Pages/Personal/justin/gmx-tutorials/umbrella/index.html

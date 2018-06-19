@@ -1,0 +1,73 @@
+#!/bin/bash
+
+#$ -S /bin/bash             # use bash shell
+#$ -V                       # inherit the submission environment 
+#$ -cwd                     # start job in submission directory
+
+#$ -m abe                   # email on abort, begin, and end
+#$ -M mansbac2@illinois.edu      # email address
+#$ -o umbrellaXXX.log
+#$ -N CHEMumbrellaXXX               # job name
+#$ -j y
+#$ -q all.q                 # queue name
+#$ -pe orte 1             # parallel environment & # cores
+##$ -l h_rt=00:10:00        # run time (hh:mm:ss)
+##$ -l hostname=compute-0-20
+
+echo " "
+echo "-------------------"
+echo "This is a $ENVIRONMENT job"
+echo "This job was submitted to the queue: $QUEUE"
+echo "The job's id is: $JOB_ID"
+echo "The job's name is: $JOB_NAME"
+echo "The job's home dir is: $SGE_O_HOME"
+echo "The job's working dir is: $SGE_O_WORKDIR"
+echo "The host node of this job is: $SGE_O_HOST"
+echo "The master node of this job is: $HOSTNAME"
+echo "The number of cores used by this job: $NSLOTS"
+echo "This job was submitted by: $SGE_O_LOGNAME"
+echo "-------------------"
+echo Running on host `hostname`
+echo Time is `date`
+echo "-------------------"
+echo " "
+
+cd $SGE_O_WORKDIR
+RUNDIR=/share/scratch/ramansbach/aaPMFs/CHEM/5_umbrella
+cd $RUNDIR
+
+NOMP=$NSLOTS
+if [ `expr $NMPI \* $NOMP` -ne $NSLOTS ] ; then
+    echo "ERROR: NMPI*NOMP != NSLOTS"
+    exit -1
+fi
+mkdir runXXX
+cd runXXX
+cp ../charmm27.ff -r .
+cp ../residuetypes.dat .
+cp ../CHEM.top .
+cp ../mono.ndx .
+cp ../umbrella.mdp .
+cp ../npt_umbrella.mdp .
+
+cp ../confXXX.gro .
+/share/apps/gromacs467/bin/grompp -v -f npt_umbrella.mdp -c confXXX.gro -p CHEM.top -n mono.ndx -o nptXXX.tpr
+/share/apps/gromacs467/bin/mdrun -pin off -nt 1 -nb cpu -v -s nptXXX.tpr -o nptXXX.trr -c nptXXX.gro -g nptXXX.log -e nptXXX.edr -x nptXXX.xtc -cpo nptXXX.cpt
+
+/share/apps/gromacs467/bin/grompp -v -f umbrella.mdp -po umbrella_grompp.mdp -c confXXX.gro -p CHEM.top -o umbrellaXXX.tpr -n mono.ndx -t nptXXX.cpt
+/share/apps/gromacs467/bin/mdrun -pin off -nt 1 -v -s umbrellaXXX.tpr -o umbrellaXXX.trr -c umbrellaXXX.gro -g umbrellaXXX.log -e umbrellaXXX.edr -x umbrellaXXX.xtc -cpo umbrellaXXX.cpt -pf pullf-umbrellaXXX.xvg -px pullx-umbrellaXXX.xvg
+
+#if [ $TEST -ne 1000013 ];
+#then
+#echo XXX >> $SGE_O_WORKDIR/crashedruns.txt
+#fi
+
+
+
+cd $SGE_O_WORKDIR
+echo " "
+echo "This job is DONE!"
+echo " "
+
+exit 0
+
