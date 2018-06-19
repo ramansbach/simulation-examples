@@ -1,1 +1,1 @@
-Live scripts for creation and analysis of patchy particle model.
+Are your results statistically significant or statistically distinct?  A bunch of functions for various tests on the differences between distributions and fits, from the Akaike information criterion to the Kolmogorov-Smirnov test (for continuous distributions) and the chi-squared test (for discrete ones).
