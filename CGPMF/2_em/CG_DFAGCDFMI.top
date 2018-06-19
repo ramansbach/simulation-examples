@@ -1,0 +1,14 @@
+#include "martini.itp"
+#include "DFAGCDFMI.itp"
+
+[ system ]
+
+; name
+Martini system from DFAGCDFMI.gro
+
+[ molecules ]
+
+; name		number
+
+Protein		2
+W		18566

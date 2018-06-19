@@ -1,13 +1,14 @@
 #!/bin/bash
 S=$(($(date +%s%N)/1000000))
-CPFOLD=/home/rachael/coarsegraining/CG/active_learning/martini-assembly/pmf2ndStructCheck
-GFOLD=/home/rachael/Analysis_and_run_code/simulations/gromacs_input_and_automation_scripts/DFAG
+WDIR=`pwd`
+CPFOLD=`dirname "$WDIR"`/python_scripts
+GFOLD=`dirname "$WDIR"`/simulation_input_files
 INDINPUT=indinput.txt
 NQ=2
 Q=0
 NION=0
 NSTEPS=100000
-FRAMES=500 #has to do with # of steps
+FRAMES=500 #has to do with # of steps, should be equivalent to the # of ps the pull simulation is run for
 QS=N
 STRUCT=coildfmi
 SCODE=CDFMI
@@ -22,11 +23,11 @@ GROUP2=15
 
 if [ $1 == 1 ]
 then
-
+	cp $CPFOLD/fixdimer.py .
 	editconf -f dfmi.gro -o dfmi1.gro -align 0 0 1 -center 6 6 5.85 -box 12 12 12 -bt triclinic
 	editconf -f dfmi.gro -o dfmi2.gro -align 0 0 1 -center 6 6 6.15 -box 12 12 12 -bt triclinic
 	cat dfmi1.gro dfmi2.gro > dfmi_dimer.gro
-	echo "make sure to fix dimer.gro"
+	python fixdimer.py dfmi_dimer.gro
 
 fi
 
@@ -36,17 +37,16 @@ then
 mkdir 1_solvate
 cd 1_solvate
 
-cp $CPFOLD/martini.itp .
+cp $GFOLD/martini.itp .
 cp $GFOLD/water.gro .
 cp ../dimer.gro .
-cp ../DFAG$SCODE* .
 cp $GFOLD/table* .
 cp $GFOLD/residuetypes.dat .
-cp $CPFOLD/fixtop.jl ./fixtop.jl
+cp $CPFOLD/fixtop.py ./fixtop.py
 cp ../dfmi.itp ./DFAG$SCODE\.itp 
 
 genbox -cp dimer.gro -cs water.gro -o DFAG_solv.gro &> genbox.out
-julia fixtop.jl 2 DFAG$SCODE
+python fixtop.py 2 DFAG$SCODE
 
 cd ..
 fi
@@ -62,7 +62,7 @@ cp ../1_solvate/table* .
 cp ../1_solvate/CG_DFAG$SCODE\.top .
 cp ../1_solvate/DFAG_solv.gro . 
 cp ../1_solvate/residuetypes.dat .
-cp $CPFOLD/em.mdp .
+cp $GFOLD/em.mdp .
 
 grompp -f em.mdp -c DFAG_solv.gro -p CG_DFAG$SCODE\.top -o em.tpr 
 mdrun -v -s em.tpr -o em.trr -c after_em.gro -g em.log -e em.edr -x em.xtc
@@ -84,7 +84,7 @@ cp ../1_solvate/table* .
 cp ../1_solvate/CG_DFAG$SCODE\.top .
 cp ../1_solvate/residuetypes.dat .
 cp ../2_em/after_em.gro .
-cp $CPFOLD/eq.mdp ./eq.mdp
+cp $GFOLD/eq.mdp ./eq.mdp
 cp  ../indinputdfmi.txt ./indinput.txt
 
 (cat indinput.txt) | make_ndx -f after_em.gro -o index.ndx
@@ -110,8 +110,8 @@ cp ../1_solvate/residuetypes.dat .
 cp ../3_eq/index.ndx .
 cp ../3_eq/after_eq.gro .
 cp ../3_eq/eq.cpt .
-cp $CPFOLD/pull.mdp ./pull.mdp
-cp $CPFOLD/umbrella.sge .
+cp $GFOLD/pull.mdp ./pull.mdp
+cp $GFOLD/umbrella.sge .
 
 sed -i "s/CCC/$STRUCT/g" umbrella.sge
 

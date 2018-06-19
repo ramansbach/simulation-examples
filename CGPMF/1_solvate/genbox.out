@@ -1,0 +1,104 @@
+                         :-)  G  R  O  M  A  C  S  (-:
+
+                       Great Red Owns Many ACres of Sand 
+
+                            :-)  VERSION 4.6.7  (-:
+
+        Contributions from Mark Abraham, Emile Apol, Rossen Apostolov, 
+           Herman J.C. Berendsen, Aldert van Buuren, Pär Bjelkmar,  
+     Rudi van Drunen, Anton Feenstra, Gerrit Groenhof, Christoph Junghans, 
+        Peter Kasson, Carsten Kutzner, Per Larsson, Pieter Meulenhoff, 
+           Teemu Murtola, Szilard Pall, Sander Pronk, Roland Schulz, 
+                Michael Shirts, Alfons Sijbers, Peter Tieleman,
+
+               Berk Hess, David van der Spoel, and Erik Lindahl.
+
+       Copyright (c) 1991-2000, University of Groningen, The Netherlands.
+         Copyright (c) 2001-2012,2013, The GROMACS development team at
+        Uppsala University & The Royal Institute of Technology, Sweden.
+            check out http://www.gromacs.org for more information.
+
+         This program is free software; you can redistribute it and/or
+       modify it under the terms of the GNU Lesser General Public License
+        as published by the Free Software Foundation; either version 2.1
+             of the License, or (at your option) any later version.
+
+                                :-)  genbox  (-:
+
+Option     Filename  Type         Description
+------------------------------------------------------------
+ -cp      dimer.gro  Input, Opt!  Structure file: gro g96 pdb tpr etc.
+ -cs      water.gro  Input, Opt!, Lib. Structure file: gro g96 pdb tpr etc.
+ -ci     insert.gro  Input, Opt.  Structure file: gro g96 pdb tpr etc.
+  -o  DFAG_solv.gro  Output       Structure file: gro g96 pdb etc.
+  -p      topol.top  In/Out, Opt. Topology file
+
+Option       Type   Value   Description
+------------------------------------------------------
+-[no]h       bool   no      Print help info and quit
+-[no]version bool   no      Print version info and quit
+-nice        int    19      Set the nicelevel
+-box         vector 0 0 0   Box size
+-nmol        int    0       Number of extra molecules to insert
+-try         int    10      Try inserting -nmol times -try times
+-seed        int    1997    Random generator seed
+-vdwd        real   0.105   Default van der Waals distance
+-shell       real   0       Thickness of optional water layer around solute
+-maxsol      int    0       Maximum number of solvent molecules to add if
+                            they fit in the box. If zero (default) this is
+                            ignored
+-[no]vel     bool   no      Keep velocities from input solute and solvent
+
+Reading solute configuration
+This file was created by createMartiniModel for the DXXX-OPV3-XXXD system with side residues PHE, ALA, and GLY
+Containing 66 atoms in 30 residues
+Initialising van der waals distances...
+Reading solvent configuration
+"WATER"
+solvent configuration contains 400 atoms in 400 residues
+
+Initialising van der waals distances...
+Will generate new solvent configuration of 4x4x4 boxes
+Generating configuration
+Sorting configuration
+Found 1 molecule type:
+      W (   1 atoms): 25600 residues
+Calculating Overlap...
+box_margin = 0.315
+Removed 5946 atoms that were outside the box
+Successfully made neighbourlist
+nri = 17163, nrj = 77571
+Checking Protein-Solvent overlap: tested 145 pairs, removed 17 atoms.
+Checking Solvent-Solvent overlap: tested 14233 pairs, removed 1071 atoms.
+Added 18566 molecules
+Generated solvent containing 18566 atoms in 18566 residues
+Writing generated configuration to DFAG_solv.gro
+
+Back Off! I just backed up DFAG_solv.gro to ./#DFAG_solv.gro.2#
+This file was created by createMartiniModel for the DXXX-OPV3-XXXD system with side residues PHE, ALA, and GLY
+
+Output configuration contains 18632 atoms in 18596 residues
+Volume                 :        1728 (nm^3)
+Density                :     3281.22 (g/l)
+Number of SOL molecules:      0   
+
+
+gcq#58: "Move Over Hogey Bear" (Urban Dance Squad)
+
+
+WARNING: Masses and atomic (Van der Waals) radii will be guessed
+         based on residue and atom names, since they could not be
+         definitively assigned from the information in your input
+         files. These guessed numbers might deviate from the mass
+         and radius of the atom type. Please check the output
+         files if necessary.
+
+Neighborsearching with a cut-off of 0.48
+Table routines are used for coulomb: FALSE
+Table routines are used for vdw:     FALSE
+Cut-off's:   NS: 0.48   Coulomb: 0.48   LJ: 0.48
+System total charge: 0.000
+Potential shift: LJ r^-12: 0.000 r^-6 0.000, Coulomb 0.000
+Note: The available nonbonded kernels do not support water optimization - disabling.
+
+Grid: 25 x 25 x 25 cells

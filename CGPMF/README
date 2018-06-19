@@ -8,7 +8,7 @@ To do all this, ensure all template files are in the correct locations and run
 
 The various segments may be run one at a time by turning off certain segments by inputting 0 instead of 1; useful for debugging or for understanding what each piece is doing.
 
-After submitted and  running all .sge files, cd to 5_umbrella and run
+After submitted and  running all .sge files [I will try to host the output so you don't ACTUALLY have to run all these and will update this once I have], cd to 5_umbrella and run
 
 > python prepWham.py
 > bash run_gwham.sh [interval] [start time] [end time] [tpr names] [pullf names] [pullx names]
