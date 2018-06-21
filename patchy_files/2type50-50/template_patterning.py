@@ -13,18 +13,18 @@ template.close()
 outfile = "production_template_temp.py"
 outtemp=open(outfile,'w')
 Afloat = float(A)/100.0
-SCAfloat = float(SCA)
-SCBfloat = float(SCB)
+SCfloatA = float(SCA)
+SCfloatB = float(SCB)
 if SCA == '02':
-    SCAfloat = 0.2
+    SCfloatA = 0.2
 if SCB == '02':
-    SCBfloat = 0.2
+    SCfloatB = 0.2
 if SCA == '09':
-    SCAfloat = 0.9
+    SCfloatA = 0.9
 if SCB == '09':
-    SCBfloat = 0.9
-SIGAfloat = float(SIGA)/100.0
-SIGBfloat = float(SIGB)/100.0
+    SCfloatB = 0.9
+SIGfloatA = float(SIGA)/100.0
+SIGfloatB = float(SIGB)/100.0
 for line in tlines:
     line = line.replace('SSS','12345')
     line = line.replace('=AAA','='+str(Afloat))
@@ -34,7 +34,7 @@ for line in tlines:
     line = line.replace('ERADB]',str(SIGfloatB)+']')
     line = line.replace('_AAA','_'+A)
     line = line.replace('-SCSCSCA','-'+SCA)
-    line = line.repalce('-SCSCSCB','-'+SCB)
+    line = line.replace('-SCSCSCB','-'+SCB)
     line = line.replace('-ERADA','-'+SIGA)
     line = line.replace('-ERADB','-'+SIGB)
     line = line.replace('RUN',RUN)

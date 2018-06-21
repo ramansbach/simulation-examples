@@ -19,7 +19,7 @@ do
 			do
 				python template_patterning.py $A $SCA $SIGA $SCB $SIGB $RUN
 				mv production_template_temp.py $A-$SCA-$SCB-$SIGA-$SIGB/production_run$RUN.py
-				sed "s/RUN/$RUN/g" production_template.pbs > $A-$SCA-SCB-$SIGA-$SIGB/production_run$RUN.pbs
+				sed "s/RUN/$RUN/g" production_template.pbs > $A-$SCA-$SCB-$SIGA-$SIGB/production_run$RUN.pbs
 				sed "s/AA/$A/g" -i $A-$SCA-$SCB-$SIGA-$SIGB/production_run$RUN.pbs
 				sed "s/SCA/$SCA/g" -i $A-$SCA-$SCB-$SIGA-$SIGB/production_run$RUN.pbs
 				sed "s/SCB/$SCB/g" -i $A-$SCA-$SCB-$SIGA-$SIGB/production_run$RUN.pbs
