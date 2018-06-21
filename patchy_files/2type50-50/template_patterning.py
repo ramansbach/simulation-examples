@@ -31,7 +31,7 @@ for line in tlines:
     line = line.replace('[SCSCSCA','['+str(SCfloatA))
     line = line.replace('SCSCSCB]',str(SCfloatB)+']')
     line = line.replace('[ERADA','['+str(SIGfloatA))
-    line = line.replace('ERADB]',str(SIGfloatB)+']')
+    line = line.replace(',ERADB',','+str(SIGfloatB))
     line = line.replace('_AAA','_'+A)
     line = line.replace('-SCSCSCA','-'+SCA)
     line = line.replace('-SCSCSCB','-'+SCB)

@@ -42,7 +42,7 @@ def MIXE(eps_i, eps_j):
 def MIXS(sigma_i, sigma_j):
 	return (sigma_i+sigma_j)/2.0
 
-def make_DXXX_monomer(bbbtype,scbtype,abtype,beadR,ebeadR,lbeadR,sticky_theta,
+def make_DXXX_monomer(bbbtype,bbbtype2,scbtype,abtype,beadR,ebeadR,lbeadR,sticky_theta,
                       rigid):
     """
     Updates rigid body to define a particular bead type in the correct shape
@@ -52,6 +52,8 @@ def make_DXXX_monomer(bbbtype,scbtype,abtype,beadR,ebeadR,lbeadR,sticky_theta,
     ----------
     bbbtype: string
         BB bead type name
+    bbbtype2: string
+        BB bead 2 type name
     scbtype: string
         SC bead type name
     abtype: string
@@ -102,7 +104,7 @@ def make_DXXX_monomer(bbbtype,scbtype,abtype,beadR,ebeadR,lbeadR,sticky_theta,
                                           (-beadR,
                                            -(beadR-lbeadR)*np.cos(sticky_theta),
                                            -(beadR-lbeadR)*np.sin(sticky_theta))],
-                                           types=[bbbtype+'2',bbbtype+'2',scbtype,scbtype,abtype,
+                                           types=[bbbtype2,bbbtype2,scbtype,scbtype,abtype,
                                                   abtype,abtype,abtype,abtype,abtype,
                                                   abtype,abtype,abtype,abtype,abtype,
                                                   abtype]) #type of particle has to be different from central particle because otherwise they are defined recursively
@@ -147,7 +149,7 @@ system.particles.types.add('LS')
 for t in types:
     system.particles.types.add('LB'+t)
     lbeadR-=offset
-    rigid = make_DXXX_monomer('E'+t,'LB'+t,'LS',beadR,ebeadR[ind],lbeadR[ind],
+    rigid = make_DXXX_monomer('E'+t,'E2','LB'+t,'LS',beadR,ebeadR[ind],lbeadR,
                               sticky_theta,rigid)
     lbeadR+=offset
     ind += 1
@@ -169,7 +171,7 @@ for p in groupR:
 for p in groupBB: 
     p.mass = beadMass
     p.diameter = 2*beadR
-for i in len(groupLBs):    
+for i in range(len(groupLBs)):    
     for p in groupLBs[i]:
         p.mass = 3.75*beadMass
         p.diameter = 2*ebeadR[i]
