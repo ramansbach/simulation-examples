@@ -1,0 +1,63 @@
+#!/bin/bash
+### set the number of processing elements (PEs) or cores
+### set the number of PEs per node
+#PBS -l nodes=4:ppn=16:xk
+### set the wallclock time
+#PBS -l walltime=27:00:00
+### set the job name
+#PBS -N production-250-SC-SIG_run5
+### set the job stdout and stderr
+### set email notification
+#PBS -m bea
+#PBS -M ramansbach@gmail.com
+###set queue
+#PBS -q normal
+# NOTE: lines that begin with "#PBS" are not interpreted by the shell but ARE 
+# used by the batch system, wheras lines that begin with multiple # signs, 
+# like "##PBS" are considered "commented out" by the batch system 
+# and have no effect.  
+
+# special NOTE about this script: the node definition above lists ppn=1 
+# and the aprun below has the "-N 1" option.  This script assumes that the 
+# bulk of the computational work is being performed by the GPU and the CPU 
+# rank is just to run the GPU code.  If that's not the case; if you want to 
+# also have worker threads on the Interlagos cores, than you'll probably want 
+# to change those numbers to 8 or 16.
+
+# If you launched the job in a directory prepared for the job to run within, 
+# you'll want to cd to that directory
+# [uncomment the following line to enable this]
+cd $PBS_O_WORKDIR
+# Alternatively, the job script can create its own job-ID-unique directory 
+# to run within.  In that case you'll need to create and populate that 
+# directory with executables and perhaps inputs
+# [uncomment and customize the following lines to enable this behavior] 
+# mkdir -p /scratch/sciteam/$USER/$PBS_JOBID
+# cd /scratch/sciteam/$USER/$PBS_JOBID
+# cp /scratch/job/setup/directory/* .
+
+# To add certain modules that you do not have added via ~/.modules 
+
+. /opt/modules/default/init/bash
+module swap PrgEnv-cray PrgEnv-gnu
+module swap gcc gcc/4.9.3
+module load bwpy/0.3.0
+#module load bwpy-mpi  # commented out
+module load cudatoolkit/7.5.18-1.0502.10743.2.1
+module list
+
+
+export LD_LIBRARY_PATH="${BWPY_DIR}/lib64:${BWPY_DIR}/usr/lib64:${LD_LIBRARY_PATH}"
+
+export PACKAGE_ROOT=/projects/eot/bamy/hoomd/install
+export PYTHONPATH=${PACKAGE_ROOT}:$PYTHONPATH
+
+
+### launch the application
+### redirecting stdin and stdout if needed
+### NOTE: (the "in" file must exist for input)
+export CRAY_CUDA_MPS=1
+export HOOMD_WALLTIME_STOP=$((`date +%s` + 27 * 3600 - 10 * 60))
+export MPICH_G2G_PIPELINE=8
+aprun -n 4 -N 1 python production_run5.py &> production5.out
+
