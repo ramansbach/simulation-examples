@@ -208,22 +208,47 @@ epsDictSLJ[('E2','E2')] = 1.0
 
 sigDictSLJ = dict()
 if lbb == 0:
-	sigDictSLJ[('E','E')] = sigslj
+	sigDictSLJ[('EA','EA')] = sigslj
+	sigDictSLJ[('EB','EB')] = sigslj
+	sigDictSLJ[('EA','EB')] = sigslj
 	sigDictSLJ[('E2','E2')] = sigslj
-	sigDictSLJ[('E','E2')] = sigslj
-	sigDictSLJ[('E','LB')] = sigslj
-	sigDictSLJ[('E2','LB')] = sigslj
+	sigDictSLJ[('EA','E2')] = sigslj
+	sigDictSLJ[('EB','E2')] = sigslj
+	sigDictSLJ[('EA','LBA')] = sigslj
+	sigDictSLJ[('EA','LBB')] = sigslj
+	sigDictSLJ[('EB','LBA')] = sigslj
+	sigDictSLJ[('EB','LBB')] = sigslj
+	sigDictSLJ[('E2','LBA')] = sigslj
+	sigDictSLJ[('E2','LBB')] = sigslj
 else:
-	sigDictSLJ[('E','E')] = sigslj
+	sigDictSLJ[('EA','EA')] = sigslj
+	sigDictSLJ[('EB','EB')] = sigslj
+	sigDictSLJ[('EA','EB')] = sigslj
 	sigDictSLJ[('E2','E2')] = sigslj
-	sigDictSLJ[('E','E2')] = sigslj
-	sigDictSLJ[('E','LB')] = sigslj
-	sigDictSLJ[('E2','LB')] = sigslj
+	sigDictSLJ[('EA','E2')] = sigslj
+	sigDictSLJ[('EB','E2')] = sigslj
+	sigDictSLJ[('EA','LBA')] = sigslj
+	sigDictSLJ[('EA','LBB')] = sigslj
+	sigDictSLJ[('EB','LBA')] = sigslj
+	sigDictSLJ[('EB','LBB')] = sigslj
+	sigDictSLJ[('E2','LBA')] = sigslj
+	sigDictSLJ[('E2','LBB')] = sigslj
 
-if lbeps == 0:
-	sigDictSLJ[('LB','LB')] = sigslj
+if lbeps[0] == 0:
+	sigDictSLJ[('LBA','LBA')] = sigslj
+	sigDictSLJ[('LBA','LBB')] = sigslj
+	if lbeps[1] == 0:
+		sigDictSLJ[('LBB','LBB')] = sigslj
+	else:
+		sigDictSLJ[('LBB','LBB')] = 0.0
+
 else:
-	sigDictSLJ[('LB','LB')] = 0.0
+	if lbeps[1] == 0:
+		sigDictSLJ[('LBB','LBB')] = sigslj
+		sigDictSLJ[('LBA','LBB')] = sigslj
+	else:
+		sigDictSLJ[('LBA','LBB')] = 0.0
+	sigDictSLJ[('LBA','LBA')] = 0.0
 
 nl = md.nlist.tree(r_buff=0.6)
 types = ['EA','EB','E2','LS','LBA','LBB']
