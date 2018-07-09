@@ -117,8 +117,8 @@ ebeadR=[ERADA/(2.**(5./6.)),ERADB/(2.**(5./6.))]
 lbeadR = 0.125
 sticky_theta = 10.*(np.pi/180.) #angle down the main sphere of the little spheres
 seed = SSSRUN
-sigslj = 2*beadR #shifted LJ sigma is basically particle diameter
-rcutslj = sigslj
+sigslj = 1.0 #shifted LJ sigma is basically particle diameter
+rcutslj = 2.0
 rcutlb = 2.0
 siglb =[ERADA,ERADB] #diameter of particle is roughly the LJ min, rm = 2^(1/6) * sigma
 sigls = 2*lbeadR / 2.**(1./6.)
@@ -179,15 +179,15 @@ for p in groupR:
  #set masses and diameters of beads
 for p in groupBB: 
     p.mass = beadMass
-    p.diameter = 2*beadR
+    p.diameter = siglbb
 for i in range(len(groupLBs)):    
     for p in groupLBs[i]:
         p.mass = 3.75*beadMass
-        p.diameter = 2*ebeadR[i]
+        p.diameter = siglb[i]
 
 for p in groupLS:
     p.mass = 0.0
-    p.diameter = 2*lbeadR
+    p.diameter = sigls
 #initialize md neighbor list and simple force field with slightly soft repulsion for repulsive beads (remember you can't have discontinuous potentials in MD!)
 #eventually this should be done with a function and some parameter input (see Andy L's code for inspiration)
 epsDictSLJ = dict()
